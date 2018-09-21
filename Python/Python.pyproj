@@ -24,6 +24,9 @@
     <Compile Include="Heap.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PeekFinding.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Python.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Arrays.h" />
     <ClInclude Include="DoubleLinkedList.h" />
+    <ClInclude Include="Graphs.h" />
     <ClInclude Include="Heaps.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Queue.h" />

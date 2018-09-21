@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 extern int const StackSize;
 
 /*Array Implementation*/
@@ -18,7 +17,7 @@ void Push(int Stack[], int *Top, int Value) {
 int Peek(int Stack[], int Top) {
 	if (Top == -1) {
 		printf("Underflow");
-		return INT_MAX;
+		return ;
 	}
 	return Stack[Top];
 }
@@ -29,6 +28,9 @@ int Pop(int Stack[], int *Top) {
 
 
 /*Linked List Implementation*/
+
+
+
 typedef struct tagNode {
 	int Val;
 	struct tagNode *Bottom;
@@ -58,6 +60,7 @@ int LPop(Node** Top) {
 	return Val;
 }
 
+   
 void Stackprint(Node* Top) {
 	printf("Satck: ");
 	while (Top) {

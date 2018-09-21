@@ -5,10 +5,6 @@
 #define LChild(index) index * 2
 #define RChild(index) index * 2 + 1
 
-enum sortTyp {
-	Asc,
-	Dsc
-};
 
 void maxHeapify(int Heap[], int index, int size) {
 	int largest;
@@ -64,14 +60,22 @@ void buildMinHeap(int Heap[], int size) {
 		minHeapify(Heap, i, size);
 }
 
-void heapSort(int Heap[], int size) {
-	buildMaxHeap(Heap, size);
+void heapSort(int Heap[], int size, bool Asc) {
+
+	if (Asc == true)
+		buildMaxHeap(Heap, size);
+	else
+		buildMinHeap(Heap, size);
+
 	while (size--) {
 		int temp = Heap[size];
 		Heap[size] = Heap[0];
 		Heap[0] = temp;
 
-		maxHeapify(Heap, 0, size);
+		if (Asc == true)
+			maxHeapify(Heap, 0, size);
+		else
+			minHeapify(Heap, 0, size);
 	}
 }
 
