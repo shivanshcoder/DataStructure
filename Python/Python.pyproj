@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>619dd45d-5d10-451c-9c97-a9c54937160f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Python.py</StartupFile>
+    <StartupFile>Heap.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

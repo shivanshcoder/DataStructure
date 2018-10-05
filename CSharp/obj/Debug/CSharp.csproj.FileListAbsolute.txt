@@ -5,3 +5,10 @@ K:\Data Structures\CSharp\obj\Debug\CSharp.csprojAssemblyReference.cache
 K:\Data Structures\CSharp\obj\Debug\CSharp.csproj.CoreCompileInputs.cache
 K:\Data Structures\CSharp\obj\Debug\CSharp.exe
 K:\Data Structures\CSharp\obj\Debug\CSharp.pdb
+K:\Data Structures\DS Code\CSharp\bin\Debug\CSharp.exe.config
+K:\Data Structures\DS Code\CSharp\bin\Debug\CSharp.exe
+K:\Data Structures\DS Code\CSharp\bin\Debug\CSharp.pdb
+K:\Data Structures\DS Code\CSharp\obj\Debug\CSharp.csprojAssemblyReference.cache
+K:\Data Structures\DS Code\CSharp\obj\Debug\CSharp.csproj.CoreCompileInputs.cache
+K:\Data Structures\DS Code\CSharp\obj\Debug\CSharp.exe
+K:\Data Structures\DS Code\CSharp\obj\Debug\CSharp.pdb

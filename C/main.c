@@ -1,15 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include"Graphs.h"
 
 
-struct t {
-	int temp;
-	int temp2;
-};
-
-struct t func() {
-	return ;
-}
-#include<stdio.h>
+ const volatile int Si = 10;
 
 void main() {
-	printf("%d",func());
+
+	GraphMenu();
 }

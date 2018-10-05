@@ -1,5 +1,6 @@
 #pragma once
 #include<stdlib.h>
+#include<stdio.h>
 
 typedef struct tagnode {
 	int Value;
@@ -47,7 +48,6 @@ void FindMinValue(Node **Root, Node **MinNode) {
 	}
 }
 
-
 void Delete(Node **Root, int Value) {
 	Node *DelNode = *Root;
 	Node *Parent = *Root;
@@ -83,39 +83,39 @@ void Delete(Node **Root, int Value) {
 }
 
 
-Node* deleteNode(Node* root, int key)
-{
-	if (root == NULL) return root;
-
-	if (key < root->Value)
-		root->left = deleteNode(root->left, key);
-
-	else if (key > root->Value)
-		root->right = deleteNode(root->right, key);
-
-	else
-	{
-		if (root->left == NULL)
-		{
-			Node *temp = root->right;
-			free(root);
-			return temp;
-		}
-		else if (root->right == NULL)
-		{
-			Node *temp = root->left;
-			free(root);
-			return temp;
-		}
-
-		Node* temp = minValueNode(root->right);
-
-		root->Value = temp->Value;
-
-		root->right = deleteNode(root->right, temp->Value);
-	}
-	return root;
-}
+//Node* deleteNode(Node* root, int key)
+//{
+//	if (root == NULL) return root;
+//
+//	if (key < root->Value)
+//		root->left = deleteNode(root->left, key);
+//
+//	else if (key > root->Value)
+//		root->right = deleteNode(root->right, key);
+//
+//	else
+//	{
+//		if (root->left == NULL)
+//		{
+//			Node *temp = root->right;
+//			free(root);
+//			return temp;
+//		}
+//		else if (root->right == NULL)
+//		{
+//			Node *temp = root->left;
+//			free(root);
+//			return temp;
+//		}
+//
+//		Node* temp = minValueNode(root->right);
+//
+//		root->Value = temp->Value;
+//
+//		root->right = deleteNode(root->right, temp->Value);
+//	}
+//	return root;
+//}
 
 void TraversalInorder(Node *Root) {
 	if (Root == NULL)

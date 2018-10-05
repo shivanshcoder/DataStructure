@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-extern int const StackSize;
+extern int const StackSize =10;
 
 /*Array Implementation*/
 void Push(int Stack[], int *Top, int Value) {
@@ -35,10 +35,10 @@ typedef struct tagNode {
 	int Val;
 	struct tagNode *Bottom;
 
-}Node;
+}SNode;
 
-void LPush(Node** Top, int Value) {
-	Node* New = (Node*)malloc(sizeof(Node));
+void LPush(SNode** Top, int Value) {
+	SNode* New = (SNode*)malloc(sizeof(SNode));
 
 	if (*Top == NULL) {
 		New->Bottom = NULL;
@@ -51,8 +51,12 @@ void LPush(Node** Top, int Value) {
 	(*Top) = New;
 }
 
-int LPop(Node** Top) {
-	Node* old = *Top;
+int LPop(SNode** Top) {
+	SNode* old = *Top;
+	if (old == NULL) {
+		printf("UnderFlow");
+	}
+
 	int Val = old->Val;
 
 	(*Top) = (*Top)->Bottom;
@@ -61,7 +65,7 @@ int LPop(Node** Top) {
 }
 
    
-void Stackprint(Node* Top) {
+void Stackprint(SNode* Top) {
 	printf("Satck: ");
 	while (Top) {
 		printf("%d  ", Top->Val);
@@ -70,7 +74,7 @@ void Stackprint(Node* Top) {
 }
 
 void StackLMenu() {
-	Node *Top = NULL;
+	SNode *Top = NULL;
 	int Value;
 	int choice;
 	while (1) {

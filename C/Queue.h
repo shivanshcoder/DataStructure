@@ -2,81 +2,88 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int const QueueSize = 10;
+extern int const QueueSize = 10;
 
 void Insert(int Queue[], int Value, int *Front, int *Rear) {
-	if (*Front == QueueSize) {
+	if (*Rear == QueueSize) {
 		printf("Overflow");
 		return;
 	}
 
-	if (*Front == -1) {
-		*Rear = 0;
+	if (*Rear == -1) {
+		*Front = 0;
 	}
-	Queue[++(*Front)] = Value;
+	Queue[++(*Rear)] = Value;
 
 }
 
 int Delete(int Queue[], int *Front, int *Rear) {
-	if (*Front < *Rear) {
+	if (*Rear < *Front) {
 		printf("Underflow");
-		return INT_MAX;
+		return ;
 	}
 
-	return Queue[(*Rear)++];
+	return Queue[(*Front)++];
 }
 
 typedef struct tagnode {
 	int Value;
 	struct tagnode *Link;
-}Node;
+}QNode;
 
-void LInsert(Node **Front, Node **Rear, int Value) {
-	Node *New = (Node*)malloc(sizeof(Node));
+void LInsert(QNode **Front, QNode **Rear, int Value) {
+	QNode *New = (QNode*)malloc(sizeof(QNode));
 
 
-	if (New == NULL) {
-		printf("Overflow");
-		return;
-	}
+	//if (New == NULL) {
+	//	printf("Overflow");
+	//	return;
+	//}
 
 	New->Link = NULL;
 	New->Value = Value;
 
-	if (*Rear == NULL) {
+	if (*Front == NULL) {
 		*Rear = *Front = New;
 	}
 	else {
-		(*Front)->Link = New;
-		*Front = New;
+		(*Rear)->Link = New;
+		*Rear = New;
 	}
 }
 
-int LDelete(Node **Front, Node **Rear) {
-	Node *Temp = *Rear;
+int LDelete(QNode **Front, QNode **Rear) {
+	QNode *Temp = *Front;
 	int val;
+
 	if (Temp == NULL) {
 		printf("UnderFlow");
 		return;
 	}
-	val = (*Rear)->Value;
-	*Rear = (*Rear)->Link;
+
+	val = (*Front)->Value;
+	*Front = (*Front)->Link;
+
+	//if the queue becomes empty
+	//if (*Front == NULL)
+	//	*Rear = NULL;
+
 	free(Temp);
 	return val;
 }
 
-void Queueprint(Node* Rear) {
+void Queueprint(QNode* Front) {
 	printf("Queue: ");
-	while (Rear) {
-		printf("%d  ", Rear->Value);
-		Rear = Rear->Link;
+	while (Front) {
+		printf("%d  ", Front->Value);
+		Front = Front->Link;
 	}
 }
 
 
 void QueueMenu() {
-	Node *Front = NULL;
-	Node *Rear = NULL;
+	QNode *Front = NULL;
+	QNode *Rear = NULL;
 	int Value;
 	int choice;
 	while (1) {
@@ -103,7 +110,7 @@ void QueueMenu() {
 				break;
 
 		case 3: {
-			Queueprint(Rear);
+			Queueprint(Front);
 		}
 				break;
 		case 4:
