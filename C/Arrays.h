@@ -3,12 +3,12 @@
 #include<stdlib.h>
 
 
-extern const int ArraySize;
+extern const int ArraySize ;
 
 int ArrayInsert(int Array[], int LBound, int UBound, int Location, int Value) {
 
 	//Checks if the array is already full
-	if (ArraySize == UBound) {
+	if (ArraySize - 1 == UBound) {
 		//Failed
 		return 0;
 	}
@@ -44,7 +44,7 @@ int ArrayDelete(int Array[], int LBound, int UBound, int Location) {
 	return 1;
 }
 
-void ArrayMergeSort(int Array1[], int LBound1, int UBound1, int Array2[], int LBound2, int UBound2, int ArrayDes[]) {
+void ArrayMerge(int Array1[], int LBound1, int UBound1, int Array2[], int LBound2, int UBound2, int ArrayDes[]) {
 
 	int Index1 = LBound1;
 	int Index2 = LBound2;
@@ -95,14 +95,13 @@ void ArrayCopy(int ArraySrc[], int LBound, int UBound, int ArrayDes[]) {
 	}
 }
 
-void InsertMenu(int Array[], int LBound, int UBound) {
+int InsertMenu(int Array[], int LBound, int UBound) {
 	int choice;
 	int Value;
 	int Loc;
 	printf("\n\n1. Insert at Beginning");
 	printf("\n2. Insert at End");
-	printf("\n3. Insert at Location");
-	//printf("\n4. Back to Main Menu");
+	printf("\n3. Insert at Location\n");
 	scanf("%d", &choice);
 
 	printf("\n Enter the Element");
@@ -111,60 +110,51 @@ void InsertMenu(int Array[], int LBound, int UBound) {
 
 	switch (choice) {
 	case 1: {
-		ArrayInsert(Array, LBound, UBound, 0, Value);
+		return ArrayInsert(Array, LBound, UBound, 0, Value);
 	}
-			break;
 
 	case 2: {
-		ArrayInsert(Array, LBound, UBound, UBound + 1, Value);
+		return ArrayInsert(Array, LBound, UBound, UBound + 1, Value);
 	}
-			break;
 
 	case 3: {
 
-		printf("\nEnter the Location");
+		printf("\nEnter the Location :");
 		scanf("%d", &Loc);
 
-		ArrayInsert(Array, LBound, UBound, Loc, Value);
+		if (Loc > UBound)
+			return 0;
+		return ArrayInsert(Array, LBound, UBound, Loc, Value);
 	}
-			break;
-
-			/*case 4: {
-
-			}
-					break;*/
 	}
 }
 
-void DeleteMenu(int Array[], int LBound, int UBound) {
+int DeleteMenu(int Array[], int LBound, int UBound) {
 	int choice;
 	int Value;
 	int Loc;
 	printf("\n\n1. Delete at Beginning");
 	printf("\n2. Delete at End");
-	printf("\n3. Delete at Location");
+	printf("\n3. Delete at Location\n");
 	//printf("\n4. Back to Main Menu");
 	scanf("%d", &choice);
 
 	switch (choice) {
 	case 1: {
-		ArrayDelete(Array, LBound, UBound, 0);
+		return ArrayDelete(Array, LBound, UBound, 0);
 	}
-			break;
 
 	case 2: {
-		ArrayDelete(Array, LBound, UBound, UBound);
+		return ArrayDelete(Array, LBound, UBound, UBound);
 	}
-			break;
 
 	case 3: {
 
-		printf("\nEnter the Location");
+		printf("\nEnter the Location :");
 		scanf("%d", &Loc);
 
-		ArrayDelete(Array, LBound, UBound, Loc);
+		return ArrayDelete(Array, LBound, UBound, Loc);
 	}
-			break;
 
 			/*case 4: {
 
@@ -179,10 +169,9 @@ void Arrayprint(int Array[], int UBound) {
 		printf(" %d  ", Array[i]);
 }
 
-void ArrayMenu(int Array[], int LBound, int UBound) {
+void ArrayMenu(int Array[]) {
+	int UBound = -1, LBound = 0;
 	int choice;
-
-	//Because it signifies the place of the last element palced in array
 
 
 	while (1) {
@@ -191,21 +180,21 @@ void ArrayMenu(int Array[], int LBound, int UBound) {
 		printf("\n2. Delete");
 		printf("\n3. Print Array");
 		printf("\n4. Search Element");
-		printf("\n5. Merge Another sorted Array");
-		printf("\n6. Exit");
+		//printf("\n5. Merge Another sorted Array");
+		printf("\n5. Exit\n");
 
 		scanf("%d", &choice);
 
 		switch (choice) {
 		case 1: {
-			InsertMenu(Array, LBound, UBound);
-			UBound++;
+			if( 1 == InsertMenu(Array, LBound, UBound))
+				UBound++;
 		}
 				break;
 
 		case 2: {
-			DeleteMenu(Array, LBound, UBound);
-			UBound--;
+			if( 1 == DeleteMenu(Array, LBound, UBound))
+				UBound--;
 		}
 				break;
 
@@ -220,15 +209,15 @@ void ArrayMenu(int Array[], int LBound, int UBound) {
 			printf("Enter the Value to Search");
 			scanf("%d", &Value);
 
-			printf("\n The value is present at index: %d", ArraySearch(Array, LBound, UBound, Value));
+			int index = ArraySearch(Array, LBound, UBound, Value);
+			if (index != -1)
+				printf("\n The value is present at index: %d", index);
+			else
+				printf("\n The value not found in Array.");
 		}
 				break;
 
-		case 5: {
-
-		}
-				break;
-		case 6:
+		case 5:
 			return;
 		}
 	}

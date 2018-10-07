@@ -43,17 +43,21 @@ void Search(Node *Root, int Item, Node **ItemAddr) {
 
 void FindMinValue(Node **Root, Node **MinNode) {
 	*MinNode = *Root;
-	while ((*MinNode)->left) {
+	while ((*MinNode)->left->left) {
 		(*MinNode) = (*MinNode)->left;
-	}
+	} 
 }
 
 void Delete(Node **Root, int Value) {
 	Node *DelNode = *Root;
 	Node *Parent = *Root;
 	Node *Temp = *Root;
+
 	if ((Root) == NULL)
 		return;
+
+	
+
 
 	while (DelNode) {
 		Parent = DelNode;
@@ -65,19 +69,35 @@ void Delete(Node **Root, int Value) {
 		else
 			DelNode = DelNode->left;
 	}
-	
-	if (DelNode->left == NULL) {
-		Parent = DelNode->right;
-		free(DelNode);
-	}
-	else if (DelNode->right == NULL) {
-		Parent = DelNode->left;
-		free(DelNode);
+
+	if (DelNode->Value == Value) {
+		if ((DelNode->right == NULL) && (DelNode->left == NULL)) {
+			free(*Root);
+			*Root = NULL;
+			return;
+		}
+		else if (DelNode->left == NULL) {
+			Parent = DelNode->right;
+			free(DelNode);
+		}
+		else if (DelNode->right == NULL) {
+			if (Parent == *Root)
+				*Root = NULL;
+			Parent = DelNode->left;
+			free(DelNode);
+		}
+		else {
+			FindMinValue(&(DelNode->right), &Temp);
+
+			DelNode->Value = Temp->left->Value;
+
+			free(Temp->left);
+			Temp->left = NULL;
+		}
 	}
 	else {
-		FindMinValue(&DelNode, &Temp);
-
-
+		printf("Value not found!");
+		
 	}
 	
 }
@@ -147,7 +167,7 @@ void TraversalPostOrder(Node *Root) {
 
 void MainMenu() {
 	int choice, Value;
-	Node *Root;
+	Node *Root = NULL;
 
 	Node *Temp;
 	while (1) {
@@ -173,7 +193,7 @@ void MainMenu() {
 			printf("\nEnter the Value to be deleted");
 			scanf("%d", &Value);
 
-			Root = deleteNode(Root, Value);
+			Delete(&Root, Value);
 
 		}
 				break;

@@ -7,26 +7,30 @@ typedef struct tagnode {
 	struct tagnode* Link;
 }Node;
 
-void InsertBeg(Node** Start, int Value) {
-	Node* New = (Node*)malloc(sizeof(Node));
+Node* InitNode(int Value) {
+	Node *New = (Node*)malloc(sizeof(Node));
 	New->Val = Value;
 	New->Link = NULL;
+
+	return New;
+}
+
+void InsertBeg(Node** Start, int Value) {
+	Node* New = InitNode(Value);
 
 	if (*Start == NULL) {
 		*Start = New;
-		return;
 	}
-	New->Link = *Start;
-	(*Start) = New;
-
+	else {
+		New->Link = *Start;
+		(*Start) = New;
+	}
 }
 
 void InsertEnd(Node** Start, int Value) {
-	Node* New = (Node*)malloc(sizeof(Node));
+	Node* New = InitNode(Value);
 	Node* Temp = *Start;
 
-	New->Val = Value;
-	New->Link = NULL;
 
 	if (*Start == NULL) {
 		*Start = New;
@@ -41,8 +45,12 @@ void InsertEnd(Node** Start, int Value) {
 
 }
 
-
 void DeleteBeg(Node **Start) {
+	if (*Start == NULL) {
+		printf("Underflow");
+		return;
+	}
+
 	Node *Temp = *Start;
 	*Start = (*Start)->Link;
 
@@ -50,33 +58,56 @@ void DeleteBeg(Node **Start) {
 }
 
 void DeleteEnd(Node **Start) {
-	Node *Temp = *Start;
-	Node *Save = *Start;
 
 	if (*Start == NULL) {
 		printf("Underflow");
 		return;
 	}
 
-	while (Temp->Link) {
-		Save = Temp;
-		Temp = Temp->Link;
-	}
-	(Save)->Link = NULL;
+	Node *Temp = *Start;	
+	Node *Save = *Start;
 
+	if (Temp->Link == NULL)
+		*Start = NULL;
+	else {
+		while (Temp->Link) {
+
+			Save = Temp;
+			Temp = Temp->Link;
+		}
+		(Save)->Link = NULL;
+	}
 	free(Temp);
 }
 
 void DeleteVal(Node **Start, int Value) {
-	Node *Temp = *Start;
-	Node *Save = *Start;
-	while (Temp->Link && Temp->Val != Value) {
-		Save = Temp;
-		Temp = Temp->Link;
+
+	if (*Start == NULL) {
+		printf("Underflow");
+		return;
 	}
 
+	Node *Temp = *Start;
+	Node *Save = *Start;
+
+	while (Temp && Temp->Val != Value) {
+		if (Temp->Link == NULL)
+			printf("\nElement not found");
+			return ;
+
+		Save = Temp;
+		Temp = Temp->Link;
+
+	}
+
+	//if only element of list
 	if (Temp->Link == NULL)
 		*Start = NULL;
+
+	//if first element is to be deleted
+	else if (Temp == Save) {
+		*Start = (*Start)->Link;
+	}
 	else {
 		Save->Link = (Temp->Link);
 	}
@@ -84,14 +115,20 @@ void DeleteVal(Node **Start, int Value) {
 	free(Temp);
 }
 
+void ClearList(Node **Start) {
+	while (Start) {
+		DeleteBeg(Start);
+	}
+}
+
 void InsertMenu(Node **Start) {
 	int choice;
 	int Value;
 	printf("\n\n1. Insert at Beginning");
-	printf("\n2. Insert at End");
+	printf("\n2. Insert at End\n");
 	scanf("%d", &choice);
 
-	printf("\n Enter the Element");
+	printf("\n Enter the Element :");
 	scanf("%d", &Value);
 
 
@@ -115,7 +152,7 @@ void DeleteMenu(Node **Start) {
 
 	printf("\n\n1. Delete at Beginning");
 	printf("\n2. Delete at End");
-	printf("\n3. Delete Value");
+	printf("\n3. Delete Value\n");
 	scanf("%d", &choice);
 
 	switch (choice) {
@@ -131,7 +168,7 @@ void DeleteMenu(Node **Start) {
 
 	case 3: {
 
-		printf("\nEnter the Value to Delete");
+		printf("\nEnter the Value to Delete :");
 		scanf("%d", &Value);
 
 		DeleteVal(Start, Value);
@@ -141,7 +178,7 @@ void DeleteMenu(Node **Start) {
 }
 
 void LinkedListPrint(Node *Start) {
-	printf("\nArray\n");
+	printf("\List\n");
 	while (Start) {
 		printf("%d  ", Start->Val);
 		Start = Start->Link;
@@ -157,7 +194,7 @@ void LinkedListMenu() {
 		printf("\n1. Insert");
 		printf("\n2. Delete");
 		printf("\n3. Print List");
-		printf("\n4. Exit");
+		printf("\n4. Exit\n");
 
 		scanf("%d", &choice);
 

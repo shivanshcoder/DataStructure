@@ -44,9 +44,6 @@
     <ClInclude Include="Graphs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="temp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PeekFinding.h">
       <Filter>Header Files</Filter>
     </ClInclude>

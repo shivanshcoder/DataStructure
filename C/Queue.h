@@ -31,19 +31,18 @@ typedef struct tagnode {
 	struct tagnode *Link;
 }QNode;
 
-void LInsert(QNode **Front, QNode **Rear, int Value) {
+QNode* QInitNode(int Value){
 	QNode *New = (QNode*)malloc(sizeof(QNode));
-
-
-	//if (New == NULL) {
-	//	printf("Overflow");
-	//	return;
-	//}
 
 	New->Link = NULL;
 	New->Value = Value;
+	return New;
+}
 
-	if (*Front == NULL) {
+void LInsert(QNode **Front, QNode **Rear, int Value) {
+	QNode *New = QInitNode(Value);
+
+	if (*Rear == NULL) {
 		*Rear = *Front = New;
 	}
 	else {
@@ -63,10 +62,6 @@ int LDelete(QNode **Front, QNode **Rear) {
 
 	val = (*Front)->Value;
 	*Front = (*Front)->Link;
-
-	//if the queue becomes empty
-	//if (*Front == NULL)
-	//	*Rear = NULL;
 
 	free(Temp);
 	return val;
@@ -91,13 +86,13 @@ void QueueMenu() {
 		printf("\n1. Insert");
 		printf("\n2. Delete");
 		printf("\n3. Print");
-		printf("\n4. Exit");
+		printf("\n4. Exit\n");
 
 		scanf("%d", &choice);
 
 		switch (choice) {
 		case 1: {
-			printf("\nEnter element");
+			printf("\nEnter element :");
 			scanf("%d", &Value);
 
 			LInsert(&Front,&Rear, Value);

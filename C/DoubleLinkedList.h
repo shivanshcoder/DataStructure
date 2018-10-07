@@ -8,11 +8,17 @@ typedef struct tagnode{
 	struct tagnode* Next;
 }Node;
 
-void InsertBeg(Node** Start, int Value) {
+Node* InitNode(int Value) {
 	Node* New = (Node*)malloc(sizeof(Node));
 	New->Val = Value;
 	New->Next = NULL;
 	New->Prev = NULL;
+
+	return New;
+}
+
+void InsertBeg(Node** Start, int Value) {
+	Node* New = InitNode(Value);
 
 	if (*Start == NULL) {
 		*Start = New;
@@ -25,12 +31,9 @@ void InsertBeg(Node** Start, int Value) {
 }
 
 void InsertEnd(Node** Start, int Value) {
-	Node* New = (Node*)malloc(sizeof(Node));
+	Node* New = InitNode(Value);
 	Node* Temp = *Start;
 
-	New->Val = Value;
-	New->Next = NULL;
-	New->Prev = NULL;
 
 	if (*Start == NULL) {
 		*Start = New;
@@ -48,6 +51,11 @@ void InsertEnd(Node** Start, int Value) {
 
 
 void DeleteBeg(Node **Start) {
+	if (*Start == NULL) {
+		printf("Underflow");
+		return;
+	}
+
 	Node *Temp = *Start;
 	*Start = (*Start)->Next;
 
@@ -57,6 +65,11 @@ void DeleteBeg(Node **Start) {
 }
 
 void DeleteEnd(Node **Start) {
+	if (*Start == NULL) {
+		printf("Underflow");
+		return;
+	}
+
 	Node *Temp = *Start;
 
 	while (Temp->Next) {
@@ -71,13 +84,21 @@ void DeleteEnd(Node **Start) {
 }
 
 void DeleteVal(Node **Start,int Value) {
+	if (*Start == NULL) {
+		printf("Underflow");
+		return;
+	}
 	Node *ToDelete = *Start;
 
-	while (ToDelete->Next && ToDelete->Val != Value) {
+	while (ToDelete && ToDelete->Val != Value) {
+		if (ToDelete->Next == NULL) {
+			printf("\nElement not found.");
+			return;
+		}
 		ToDelete = ToDelete->Next;
 	}
 
-	if ((ToDelete->Prev == NULL) && (ToDelete->Next == NULL))
+	if ((ToDelete->Prev == NULL) && (ToDelete->Next == NULL) && ToDelete->Val == Value)
 		*Start = NULL;
 	else {
 		(ToDelete->Prev)->Next = (ToDelete->Next);
@@ -91,10 +112,10 @@ void InsertMenu(Node **Start) {
 	int choice;
 	int Value;
 	printf("\n\n1. Insert at Beginning");
-	printf("\n2. Insert at End");
+	printf("\n2. Insert at End\n");
 	scanf("%d", &choice);
 
-	printf("\n Enter the Element");
+	printf("\n Enter the Element :");
 	scanf("%d", &Value);
 
 
@@ -118,7 +139,7 @@ void DeleteMenu(Node **Start) {
 
 	printf("\n\n1. Delete at Beginning");
 	printf("\n2. Delete at End");
-	printf("\n3. Delete Value");
+	printf("\n3. Delete Value \n");
 	scanf("%d", &choice);
 
 	switch (choice) {
@@ -134,7 +155,7 @@ void DeleteMenu(Node **Start) {
 
 	case 3: {
 
-		printf("\nEnter the Value to Delete");
+		printf("\nEnter the Value to Delete :");
 		scanf("%d", &Value);
 
 		DeleteVal(Start, Value);
@@ -160,7 +181,7 @@ void LinkedListMenu() {
 		printf("\n1. Insert");
 		printf("\n2. Delete");
 		printf("\n3. Print List");
-		printf("\n4. Exit");
+		printf("\n4. Exit\n");
 
 		scanf("%d", &choice);
 

@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-extern int const StackSize =10;
+extern int const StackSize = 10;
 
 /*Array Implementation*/
 void Push(int Stack[], int *Top, int Value) {
@@ -34,27 +34,29 @@ int Pop(int Stack[], int *Top) {
 typedef struct tagNode {
 	int Val;
 	struct tagNode *Bottom;
-
 }SNode;
 
-void LPush(SNode** Top, int Value) {
-	SNode* New = (SNode*)malloc(sizeof(SNode));
-
-	if (*Top == NULL) {
-		New->Bottom = NULL;
-		*Top = New;
-	}
-	else {
-		New->Bottom = (*Top);
-	}
+SNode *SInitNode(int Value) {
+	SNode *New = (SNode*)malloc(sizeof(SNode));
 	New->Val = Value;
+
+	return New;
+}
+
+void LPush(SNode** Top, int Value) {
+	SNode* New = SInitNode(Value);
+
+	New->Bottom = (*Top);
+	
 	(*Top) = New;
 }
 
 int LPop(SNode** Top) {
 	SNode* old = *Top;
+
 	if (old == NULL) {
 		printf("UnderFlow");
+		return;
 	}
 
 	int Val = old->Val;
@@ -64,7 +66,6 @@ int LPop(SNode** Top) {
 	return Val;
 }
 
-   
 void Stackprint(SNode* Top) {
 	printf("Satck: ");
 	while (Top) {
@@ -82,13 +83,13 @@ void StackLMenu() {
 		printf("\n1. Push");
 		printf("\n2. Pop");
 		printf("\n3. Print");
-		printf("\n4. Exit");
+		printf("\n4. Exit\n");
 
 		scanf("%d", &choice);
 
 		switch (choice) {
 		case 1: {
-			printf("\nEnter element");
+			printf("\nEnter element :");
 			scanf("%d", &Value);
 
 			LPush(&Top, Value);
